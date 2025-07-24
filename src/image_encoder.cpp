@@ -1,7 +1,25 @@
+/**
+ * @file image_encoder.cpp
+ * @brief Implementation of the Image Encoder API.
+ *
+ * Uses libcurl to fetch image bytes, then encodes them using RFC4648 Base64.
+ *
+ * @see image_encoder.h
+ */
+
 #include "image_encoder.h"
 #include <curl/curl.h>
 #include <vector>
 
+/**
+ * @brief libcurl write callback to accumulate downloaded bytes into a buffer.
+ *
+ * @param contents Pointer to the delivered data.
+ * @param size Size of each data element.
+ * @param nmemb Number of elements.
+ * @param userp Pointer to the buffer (std::vector<unsigned char>).
+ * @return Number of bytes processed.
+ */
 static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
     auto* buffer = static_cast<std::vector<unsigned char>*>(userp);
     size_t total = size * nmemb;
@@ -15,6 +33,13 @@ static const std::string base64_chars =
     "abcdefghijklmnopqrstuvwxyz"
     "0123456789+/";
 
+/**
+ * @brief Base64-encodes a byte array (RFC4648).
+ *
+ * @param bytes_to_encode Pointer to the data to encode.
+ * @param in_len Number of bytes to encode.
+ * @return A std::string containing the Base64-encoded output.
+ */
 static std::string base64_encode(const unsigned char* bytes_to_encode, size_t in_len) {
     std::string ret;
     int i = 0, j = 0;
@@ -43,6 +68,15 @@ static std::string base64_encode(const unsigned char* bytes_to_encode, size_t in
     return ret;
 }
 
+/**
+ * @brief Downloads an image from the specified URL and Base64-encodes it.
+ *
+ * @param url The HTTP(S) URL of the image to fetch.
+ * @param out_base64 [out] Will be set to the Base64-encoded image data.
+ * @return true on success, false on error (download or encode failure).
+ *
+ * @see image_encoder.h
+ */
 IMAGE_ENCODER_API bool encode_image_from_url(
     const std::string& url,
     std::string& out_base64
@@ -60,6 +94,7 @@ IMAGE_ENCODER_API bool encode_image_from_url(
     if (res != CURLE_OK) {
         return false;
     }
+
     out_base64 = base64_encode(image_data.data(), image_data.size());
     return true;
 }

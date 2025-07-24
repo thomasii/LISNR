@@ -25,11 +25,11 @@ A cross-platform C++ library + executable using libcurl (via vcpkg) for HTTP req
 # In your vcpkg folder:
 ./vcpkg install curl
 
-3. Configure VC Package
-
+3. Configure VC Package Windows
+```
 $env:VCPKG_ROOT = "C:\Users\User\vcpkg"
 $env:PATH = "$env:VCPKG_ROOT;$env:PATH"
-
+```
 # verify vcpkg path
 (Get-Command vcpkg.exe).Path 
 
@@ -63,11 +63,11 @@ cmake --build build --config Debug
 
 ```
 # Windows (Debug build)
-.\build\Debug\image_encoder_cli.exe "https://cdn.pixabay.com/photo/2025/07/12/10/04/reinebringen-9710168_1280.jpg" encoded.txt
+.\build\image_encoder_cli.exe "https://cdn.pixabay.com/photo/2025/07/12/10/04/reinebringen-9710168_1280.jpg" encoded.txt
 
 
 # Linux/macOS
-./build/Debug/image_encoder_cli "https://cdn.pixabay.com/photo/2025/07/12/10/04/reinebringen-9710168_1280.jpg" encoded.txt
+./build/image_encoder_cli "https://cdn.pixabay.com/photo/2025/07/12/10/04/reinebringen-9710168_1280.jpg" encoded.txt
 ```
 
 ## Use as Shared Linked Library
