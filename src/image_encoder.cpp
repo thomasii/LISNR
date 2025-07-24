@@ -28,6 +28,14 @@ static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* use
     return total;
 }
 
+/**
+ * @brief Lookup table of Base64 characters (RFC 4648).
+ *
+ * This static constant string provides the mapping from 6-bit
+ * values to their corresponding ASCII characters during Base64
+ * encoding. It is needed to convert each 6-bit group of the input
+ * into the proper printable character.
+ */
 static const std::string base64_chars =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     "abcdefghijklmnopqrstuvwxyz"

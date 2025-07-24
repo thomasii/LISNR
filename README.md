@@ -63,7 +63,7 @@ cmake --build build --config Debug
 
 ```
 # Windows (Debug build)
-.\build\image_encoder_cli.exe "https://cdn.pixabay.com/photo/2025/07/12/10/04/reinebringen-9710168_1280.jpg" encoded.txt
+.\build\Debug\image_encoder_cli.exe "https://cdn.pixabay.com/photo/2025/07/12/10/04/reinebringen-9710168_1280.jpg" encoded.txt
 
 
 # Linux/macOS
