@@ -25,8 +25,20 @@ A cross-platform C++ library + executable using libcurl (via vcpkg) for HTTP req
 # In your vcpkg folder:
 ./vcpkg install curl
 
-3. (Optional) Integrate with VS globally:
-.\vcpkg.exe integrate install
+3. Configure VC Package
+
+$env:VCPKG_ROOT = "C:\Users\User\vcpkg"
+$env:PATH = "$env:VCPKG_ROOT;$env:PATH"
+
+# verify vcpkg path
+(Get-Command vcpkg.exe).Path 
+
+# Force vc package to use your Curl
+vcpkg.exe install curl:x64-windows --vcpkg-root=C:\Users\User\vcpkg
+
+# Inside root of project dir
+Remove-Item -Recurse -Force build
+vcpkg.exe install
 
 ## Building the Project
 # Remove old build cache (if any)
@@ -43,24 +55,24 @@ cmake -S . -B build -G "Visual Studio 17 2022" -DCMAKE_TOOLCHAIN_FILE="C:/path/t
 cmake -S . -B build \
   -DCMAKE_TOOLCHAIN_FILE="$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake" \
   -DIMAGE_ENCODER_BUILD_SHARED=ON
-
-# Build
-cmake --build build --config Release
 ```
+# Build exe
+cmake --build build --config Debug
 
 ## Running the CLI Executable
 
 ```
 # Windows (Debug build)
-.\build\Debug\image_encoder_cli.exe "https://example.com/image.png" encoded.txt
+.\build\Debug\image_encoder_cli.exe "https://cdn.pixabay.com/photo/2025/07/12/10/04/reinebringen-9710168_1280.jpg" encoded.txt
+
 
 # Linux/macOS
-./build/image_encoder_cli "https://example.com/image.png" encoded.txt
+./build/Debug/image_encoder_cli "https://cdn.pixabay.com/photo/2025/07/12/10/04/reinebringen-9710168_1280.jpg" encoded.txt
 ```
 
 ## Use as Shared Linked Library
 
 ```
-cd build/Release
+cd build/Debug
 .\use_image_encoder.exe
 ```
