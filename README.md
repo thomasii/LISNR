@@ -9,6 +9,7 @@ A cross-platform C++ library + executable using libcurl (via vcpkg) for HTTP req
 - A C++17-capable compiler (MSVC on Windows, GCC/Clang on Linux/macOS)  
 - PowerShell (Windows) or bash (macOS/Linux)
 - vcpkg (for dependency management)  
+- Curl
 
 ## vcpkg Setup
 
